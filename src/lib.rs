@@ -122,7 +122,7 @@ impl<'a> ImgixUrlBuilder<'a> {
         self
     }
     pub fn rect(&mut self, rect: rect::ImgixRect) -> &mut Self {
-        self.params.push(("rect", rect.into()));
+        self.params.push(("rect", rect.to_string()));
         self
     }
 }
