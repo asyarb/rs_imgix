@@ -22,26 +22,6 @@ use qstring::QString;
 // }
 
 // #[derive(Builder, Clone)]
-// pub struct ImgixAuto {
-//     pub compress: bool,
-//     pub enhance: bool,
-//     pub format: bool,
-//     pub redeye: bool,
-// }
-
-// #[derive(Clone)]
-// pub enum RectDirection {
-//     Number(i32),
-//     Direction(String),
-// }
-
-// #[derive(Builder, Clone)]
-// pub struct ImgixRect {
-//     pub x: RectDirection,
-//     pub y: RectDirection,
-//     pub w: i32,
-//     pub h: i32,
-// }
 
 // #[derive(Builder, Clone)]
 // pub struct ImgixCrop {
@@ -63,9 +43,11 @@ use qstring::QString;
 //     pub save_data: bool,
 // }
 
+mod auto;
+mod rect;
+
 pub struct ImgixUrl {
-    // auto: ImgixAuto,
-// rect: ImgixRect,
+    // rect: ImgixRect,
 // fit: ImgixFit,
 // crop: ImgixCrop,
 // ch: ImgixClientHints,
@@ -132,6 +114,15 @@ impl<'a> ImgixUrlBuilder<'a> {
     /// Aspect Ratio
     pub fn ar(&mut self, w: i32, h: i32) -> &mut Self {
         self.params.push(("ar", format!("{}:{}", w, h)));
+        self
+    }
+    /// Auto
+    pub fn auto(&mut self, auto: auto::ImgixAuto) -> &mut Self {
+        self.params.push(("auto", auto.into()));
+        self
+    }
+    pub fn rect(&mut self, rect: rect::ImgixRect) -> &mut Self {
+        self.params.push(("rect", rect.into()));
         self
     }
 }
