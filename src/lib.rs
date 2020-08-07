@@ -118,7 +118,7 @@ impl<'a> ImgixUrlBuilder<'a> {
     }
     /// Auto
     pub fn auto(&mut self, auto: auto::ImgixAuto) -> &mut Self {
-        self.params.push(("auto", auto.into()));
+        self.params.push(("auto", auto.to_string()));
         self
     }
     pub fn rect(&mut self, rect: rect::ImgixRect) -> &mut Self {
