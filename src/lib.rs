@@ -1,17 +1,6 @@
 use qstring::QString;
 
 // #[derive(Clone)]
-// pub enum ImgixFit {
-//     Clamp,
-//     Clip,
-//     Crop,
-//     FaceArea,
-//     Fill,
-//     FillMax,
-//     Max,
-//     Min,
-//     Scale,
-// }
 
 // #[derive(Clone)]
 // pub enum ImgixColorSpace {
@@ -24,16 +13,6 @@ use qstring::QString;
 // #[derive(Builder, Clone)]
 
 // #[derive(Builder, Clone)]
-// pub struct ImgixCrop {
-//     pub top: bool,
-//     pub bottom: bool,
-//     pub left: bool,
-//     pub right: bool,
-//     pub faces: bool,
-//     pub focalpoint: bool,
-//     pub edges: bool,
-//     pub entropy: bool,
-// }
 
 // #[derive(Builder, Clone)]
 // pub struct ImgixClientHints {
@@ -44,12 +23,12 @@ use qstring::QString;
 // }
 
 mod auto;
+mod crop;
+mod fit;
 mod rect;
 
 pub struct ImgixUrl {
-    // rect: ImgixRect,
-// fit: ImgixFit,
-// crop: ImgixCrop,
+    // crop: ImgixCrop,
 // ch: ImgixClientHints,
 // cs: ImgixClientHints,
 }
@@ -121,8 +100,18 @@ impl<'a> ImgixUrlBuilder<'a> {
         self.params.push(("auto", auto.to_string()));
         self
     }
+    /// Rect
     pub fn rect(&mut self, rect: rect::ImgixRect) -> &mut Self {
         self.params.push(("rect", rect.to_string()));
+        self
+    }
+    /// Fit
+    pub fn fit(&mut self, fit: fit::ImgixFit) -> &mut Self {
+        self.params.push(("fit", fit.to_string()));
+        self
+    }
+    pub fn crop(&mut self, crop: crop::ImgixCrop) -> &mut Self {
+        self.params.push(("crop", crop.to_string()));
         self
     }
 }

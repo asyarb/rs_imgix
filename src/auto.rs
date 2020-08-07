@@ -6,33 +6,6 @@ pub struct ImgixAuto {
     redeye: bool,
 }
 
-pub struct ImgixAutoBuilder {
-    inner: ImgixAuto,
-}
-
-impl ImgixAutoBuilder {
-    pub fn finish(&self) -> ImgixAuto {
-        self.inner.clone()
-    }
-
-    pub fn compress(&mut self, val: bool) -> &mut Self {
-        self.inner.compress = val;
-        self
-    }
-    pub fn enhance(&mut self, val: bool) -> &mut Self {
-        self.inner.enhance = val;
-        self
-    }
-    pub fn format(&mut self, val: bool) -> &mut Self {
-        self.inner.format = val;
-        self
-    }
-    pub fn redeye(&mut self, val: bool) -> &mut Self {
-        self.inner.redeye = val;
-        self
-    }
-}
-
 impl ToString for ImgixAuto {
     fn to_string(&self) -> String {
         let mut opts = Vec::new();
@@ -70,5 +43,49 @@ impl ImgixAuto {
         ImgixAutoBuilder {
             inner: Self::default(),
         }
+    }
+}
+
+pub struct ImgixAutoBuilder {
+    inner: ImgixAuto,
+}
+
+impl ImgixAutoBuilder {
+    pub fn finish(&self) -> ImgixAuto {
+        self.inner.clone()
+    }
+
+    pub fn compress(&mut self) -> &mut Self {
+        self.inner.compress = true;
+        self
+    }
+    pub fn enhance(&mut self) -> &mut Self {
+        self.inner.enhance = true;
+        self
+    }
+    pub fn format(&mut self) -> &mut Self {
+        self.inner.format = true;
+        self
+    }
+    pub fn redeye(&mut self) -> &mut Self {
+        self.inner.redeye = true;
+        self
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn works() {
+        let str_params = ImgixAuto::build()
+            .compress()
+            .enhance()
+            .format()
+            .finish()
+            .to_string();
+
+        assert_eq!(str_params, "compress,enhance,format");
     }
 }
