@@ -1,25 +1,13 @@
 use qstring::QString;
 
-// #[derive(Clone)]
-
-// #[derive(Builder, Clone)]
-// pub struct ImgixClientHints {
-//     pub width: bool,
-//     pub dpr: bool,
-//     // TODOeriaize as saveData?
-//     pub save_data: bool,
-// }
-
 mod auto;
+mod client_hints;
 mod color_space;
 mod crop;
 mod fit;
 mod rect;
 
-pub struct ImgixUrl {
-    // ch: ImgixClientHints,
-// cs: ImgixColorSpace,
-}
+pub struct ImgixUrl;
 
 impl ImgixUrl {
     pub fn build(url: &str) -> ImgixUrlBuilder {
@@ -104,6 +92,10 @@ impl<'a> ImgixUrlBuilder<'a> {
     }
     pub fn cs(&mut self, cs: color_space::ImgixColorSpace) -> &mut Self {
         self.params.push(("cs", cs.to_string()));
+        self
+    }
+    pub fn ch(&mut self, ch: client_hints::ImgixClientHints) -> &mut Self {
+        self.params.push(("ch", ch.to_string()));
         self
     }
 }
