@@ -2,18 +2,6 @@ use qstring::QString;
 
 // #[derive(Clone)]
 
-// #[derive(Clone)]
-// pub enum ImgixColorSpace {
-//     SRGB,
-//     AdobeRGB1998,
-//     TinySRGB,
-//     Strip,
-// }
-
-// #[derive(Builder, Clone)]
-
-// #[derive(Builder, Clone)]
-
 // #[derive(Builder, Clone)]
 // pub struct ImgixClientHints {
 //     pub width: bool,
@@ -23,14 +11,14 @@ use qstring::QString;
 // }
 
 mod auto;
+mod color_space;
 mod crop;
 mod fit;
 mod rect;
 
 pub struct ImgixUrl {
-    // crop: ImgixCrop,
-// ch: ImgixClientHints,
-// cs: ImgixClientHints,
+    // ch: ImgixClientHints,
+// cs: ImgixColorSpace,
 }
 
 impl ImgixUrl {
@@ -112,6 +100,10 @@ impl<'a> ImgixUrlBuilder<'a> {
     }
     pub fn crop(&mut self, crop: crop::ImgixCrop) -> &mut Self {
         self.params.push(("crop", crop.to_string()));
+        self
+    }
+    pub fn cs(&mut self, cs: color_space::ImgixColorSpace) -> &mut Self {
+        self.params.push(("cs", cs.to_string()));
         self
     }
 }
