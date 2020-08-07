@@ -1,0 +1,8 @@
+[package]
+name = "rs-imgix"
+version = "0.1.0"
+authors = ["git <asyarb@hawaii.edu>"]
+edition = "2018"
+
+[dependencies]
+qstring = "0.7.2"
