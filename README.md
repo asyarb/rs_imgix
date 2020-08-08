@@ -6,9 +6,9 @@ TODO
 
 ## Overview
 
-`rs-imgix` is a small utility library for constructing valid Imgix URL
-`String`s. It utilizes the common Rust builder pattern to dynamically assign
-parameters that are added to the URL.
+`rs-imgix` is a small crate for constructing valid Imgix URL `String`s. It
+utilizes the common Rust builder pattern to dynamically assign parameters that
+are added to the URL.
 
 In a nutshell, basic usage looks like this:
 
