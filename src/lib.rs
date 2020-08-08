@@ -3,14 +3,14 @@
 /*!
 # Overview
 
-`rs-imgix` is a small utility library for constructing valid Imgix URL
+`rs_imgix` is a small utility library for constructing valid Imgix URL
 `String`s. It utilizes the common Rust builder pattern to dynamically assign
 parameters that are added to the URL.
 
 In a nutshell, basic usage looks like this:
 
 ```rust
-use rs-imgix::ImgixUrl;
+use rs_imgix::ImgixUrl;
 
 fn main() {
     let url = ImgixUrl::build("https://example.com")
@@ -44,7 +44,7 @@ mod rect;
 ///
 /// # Example
 /// ```
-/// use rs-imgix::ImgixUrl;
+/// use rs_imgix::ImgixUrl;
 ///
 /// let url = ImgixUrl::build("https://foo.com").blur(20).finish();
 /// assert_eq!(url, "https://foob.com/?blur=20");
@@ -237,9 +237,10 @@ mod tests {
             .blur(40)
             .q(40)
             .w(300)
+            .fit(fit::ImgixFit::Crop)
             .ar(9, 1)
             .finish();
 
-        assert_eq!(url, "https://foo.com/?blur=40&q=40&w=300&ar=9:1");
+        assert_eq!(url, "https://foo.com/?blur=40&q=40&w=300&fit=crop&ar=9:1");
     }
 }

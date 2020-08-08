@@ -1,5 +1,5 @@
 [package]
-name = "rs-imgix"
+name = "rs_imgix"
 version = "0.1.0"
 authors = ["git <asyarb@hawaii.edu>"]
 edition = "2018"
