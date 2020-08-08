@@ -42,8 +42,8 @@ impl ToString for ImgixAuto {
 }
 
 impl ImgixAuto {
-    /// Starts building a `ImgixAuto`. Returns an `ImgixAutoBuilder` to specify
-    /// options to pass the `auto`.
+    /// Starts building the `auto` parameter. Returns an `ImgixAutoBuilder` to
+    /// specify options to pass to `auto`.
     pub fn build() -> ImgixAutoBuilder {
         ImgixAutoBuilder {
             inner: Self::default(),
@@ -51,8 +51,8 @@ impl ImgixAuto {
     }
 }
 
-#[derive(Debug)]
 /// Builder for specifying `auto` parameter options.
+#[derive(Debug)]
 pub struct ImgixAutoBuilder {
     inner: ImgixAuto,
 }

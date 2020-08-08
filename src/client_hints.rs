@@ -1,4 +1,10 @@
-#[derive(Clone)]
+/// The ch parameter opts in specific images to use [Client
+/// Hints](https://developers.google.com/web/updates/tags/clienthints),
+/// which provide automatic resource selection using browser headers.
+///
+/// See [Imgix docs](https://docs.imgix.com/apis/url/format/ch) for more
+/// info.
+#[derive(Clone, Debug, Default)]
 pub struct ImgixClientHints {
     width: bool,
     dpr: bool,
@@ -23,17 +29,9 @@ impl ToString for ImgixClientHints {
     }
 }
 
-impl Default for ImgixClientHints {
-    fn default() -> Self {
-        Self {
-            width: false,
-            dpr: false,
-            save_data: false,
-        }
-    }
-}
-
 impl ImgixClientHints {
+    /// Starts building the `ch` parameter. Returns an `ImgixClientHintsBuilder`
+    /// to specify options to pass to `ch`.
     pub fn build() -> ImgixClientHintsBuilder {
         ImgixClientHintsBuilder {
             inner: Self::default(),
@@ -41,23 +39,33 @@ impl ImgixClientHints {
     }
 }
 
+/// Builder for specifying `ch` parameter options.
+#[derive(Debug)]
 pub struct ImgixClientHintsBuilder {
     inner: ImgixClientHints,
 }
 
 impl ImgixClientHintsBuilder {
+    /// Completes the construction of the `ch` parameter and returns the
+    /// `ImgixClientHints` type.
     pub fn finish(&self) -> ImgixClientHints {
         self.inner.clone()
     }
 
+    /// Overrides the imgix `w` parameter.
     pub fn width(&mut self) -> &mut Self {
         self.inner.width = true;
         self
     }
+
+    /// Overrides the `dpr` parameter.
     pub fn dpr(&mut self) -> &mut Self {
         self.inner.dpr = true;
         self
     }
+
+    /// Reduces image quality to `q=45` and may change the output format of the
+    /// image.
     pub fn save_data(&mut self) -> &mut Self {
         self.inner.save_data = true;
         self
