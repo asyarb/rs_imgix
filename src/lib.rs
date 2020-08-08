@@ -3,9 +3,9 @@
 /*!
 # Overview
 
-`rs_imgix` is a small utility library for constructing valid Imgix URL
-`String`s. It utilizes the common Rust builder pattern to dynamically assign
-parameters that are added to the URL.
+`rs_imgix` is a small crate for constructing valid Imgix URL `String`s. It
+utilizes the common Rust builder pattern to dynamically assign parameters that
+are added to the URL.
 
 In a nutshell, basic usage looks like this:
 
@@ -47,7 +47,7 @@ mod rect;
 /// use rs_imgix::ImgixUrl;
 ///
 /// let url = ImgixUrl::build("https://foo.com").blur(20).finish();
-/// assert_eq!(url, "https://foob.com/?blur=20");
+/// assert_eq!(url, "https://foo.com/?blur=20");
 /// ```
 pub struct ImgixUrl;
 
