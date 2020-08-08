@@ -1,4 +1,18 @@
-#[derive(Clone)]
+/// Builder to represent the `auto` URL parameter. Begin constructing a new URL
+/// by calling `build()`.
+///
+/// # Example
+/// ```
+/// use rs_imgix::{ImgixUrl, ImgixAuto};
+///
+/// let auto_opts = ImgixAuto::build().compress().redeye().finish();
+/// let str = ImgixUrl::build("https://foo.com")
+///     .auto(auto_opts)
+///     .finish();
+///
+/// assert_eq!(str, "https://foo.com/?auto=compress,redeye");
+/// ```
+#[derive(Clone, Debug, Default)]
 pub struct ImgixAuto {
     compress: bool,
     enhance: bool,
@@ -27,18 +41,9 @@ impl ToString for ImgixAuto {
     }
 }
 
-impl Default for ImgixAuto {
-    fn default() -> Self {
-        Self {
-            compress: false,
-            enhance: false,
-            format: false,
-            redeye: false,
-        }
-    }
-}
-
 impl ImgixAuto {
+    /// Starts building a `ImgixAuto`. Returns an `ImgixAutoBuilder` to specify
+    /// options to pass the `auto`.
     pub fn build() -> ImgixAutoBuilder {
         ImgixAutoBuilder {
             inner: Self::default(),
@@ -46,27 +51,52 @@ impl ImgixAuto {
     }
 }
 
+#[derive(Debug)]
+/// Builder for specifying `auto` parameter options.
 pub struct ImgixAutoBuilder {
     inner: ImgixAuto,
 }
 
 impl ImgixAutoBuilder {
+    /// Completes the construction of the `auto` parameter and returns the final
+    /// `ImgixAuto` type.
     pub fn finish(&self) -> ImgixAuto {
         self.inner.clone()
     }
 
+    /// When set, Imgix will apply best-effort techniques to reduce the size of
+    /// the image.
+    ///
+    /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#compress) for
+    /// more info.
     pub fn compress(&mut self) -> &mut Self {
         self.inner.compress = true;
         self
     }
+
+    /// When set, the image is adjusted using the distrubution of higlights,
+    /// midtones, and shadow across RGB channels.
+    ///
+    /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#enhance) for
+    /// more info.
     pub fn enhance(&mut self) -> &mut Self {
         self.inner.enhance = true;
         self
     }
+
+    /// When set, Imgix determines whether the image can be served in a better format by a process called automatic content negotiation.
+    ///
+    /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#format) for
+    /// more info.
     pub fn format(&mut self) -> &mut Self {
         self.inner.format = true;
         self
     }
+
+    /// When set, red-eye removal is applied to any detected faces.
+    ///
+    /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#redeye) for
+    /// more info.
     pub fn redeye(&mut self) -> &mut Self {
         self.inner.redeye = true;
         self

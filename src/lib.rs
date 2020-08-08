@@ -1,4 +1,4 @@
-#![deny(missing_docs)]
+#![warn(missing_docs, missing_debug_implementations, rust_2018_idioms)]
 
 /*!
 # Overview
@@ -40,6 +40,13 @@ mod crop;
 mod fit;
 mod rect;
 
+pub use crate::auto::{ImgixAuto, ImgixAutoBuilder};
+pub use crate::client_hints::{ImgixClientHints, ImgixClientHintsBuilder};
+pub use crate::color_space::ImgixColorSpace;
+pub use crate::crop::{ImgixCrop, ImgixCropBuilder};
+pub use crate::fit::ImgixFit;
+pub use crate::rect::{Direction, ImgixRect, X, Y};
+
 /// A builder for Imgix URLs. Begin constructing a new URL by calling `build()`.
 ///
 /// # Example
@@ -49,12 +56,13 @@ mod rect;
 /// let url = ImgixUrl::build("https://foo.com").blur(20).finish();
 /// assert_eq!(url, "https://foo.com/?blur=20");
 /// ```
+#[derive(Debug)]
 pub struct ImgixUrl;
 
 impl ImgixUrl {
     /// Starts building a Imgix URL. Returns an `ImgixUrlBuilder` to add
     /// additional query parameters to the URL.
-    pub fn build(url: &str) -> ImgixUrlBuilder {
+    pub fn build(url: &str) -> ImgixUrlBuilder<'_> {
         ImgixUrlBuilder {
             params: Vec::new(),
             url: url.into(),
@@ -62,7 +70,8 @@ impl ImgixUrl {
     }
 }
 
-/// Builder for specifying URL parametrs to add to the constructed URL.
+/// Builder for specifying URL parameters to add to the constructed URL.
+#[derive(Debug)]
 pub struct ImgixUrlBuilder<'a> {
     params: Vec<(&'a str, String)>,
     url: String,
@@ -237,7 +246,7 @@ mod tests {
             .blur(40)
             .q(40)
             .w(300)
-            .fit(fit::ImgixFit::Crop)
+            .fit(ImgixFit::Crop)
             .ar(9, 1)
             .finish();
 
