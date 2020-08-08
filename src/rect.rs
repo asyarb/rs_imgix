@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum X {
     Left,
     Center,
@@ -14,6 +15,7 @@ impl ToString for X {
     }
 }
 
+#[derive(Debug)]
 pub enum Y {
     Top,
     Middle,
@@ -30,6 +32,7 @@ impl ToString for Y {
     }
 }
 
+#[derive(Debug)]
 pub enum Direction {
     Number(i32),
     X(X),
