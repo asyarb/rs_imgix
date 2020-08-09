@@ -1,7 +1,7 @@
 # rs-imgix
 
 `rs-imgix` is a small crate for constructing valid Imgix URL `String`s. It
-utilizes the common Rust builder pattern to dynamically assign parameters that
+utilizes the builder pattern to dynamically assign parameters that
 are added to the URL.
 
 ## Installation
