@@ -1,14 +1,19 @@
 # rs-imgix
 
-## Installation
-
-TODO
-
-## Overview
-
 `rs-imgix` is a small crate for constructing valid Imgix URL `String`s. It
 utilizes the common Rust builder pattern to dynamically assign parameters that
 are added to the URL.
+
+## Installation
+
+In your `Cargo.toml`:
+
+```toml
+[dependencies]
+rs_imgix = { git = "https://github.com/asyarb/rs_imgix" }
+```
+
+## Overview
 
 In a nutshell, basic usage looks like this:
 
