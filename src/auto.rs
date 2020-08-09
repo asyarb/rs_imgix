@@ -5,12 +5,11 @@
 /// ```
 /// use rs_imgix::{ImgixUrl, ImgixAuto};
 ///
-/// let auto_opts = ImgixAuto::build().compress().redeye().finish();
-/// let str = ImgixUrl::build("https://foo.com")
-///     .auto(auto_opts)
+/// let url = ImgixUrl::build("https://foo.com")
+///     .auto(ImgixAuto::build().compress().redeye().finish())
 ///     .finish();
 ///
-/// assert_eq!(str, "https://foo.com/?auto=compress,redeye");
+/// assert_eq!(url, "https://foo.com/?auto=compress,redeye");
 /// ```
 #[derive(Clone, Debug, Default)]
 pub struct ImgixAuto {

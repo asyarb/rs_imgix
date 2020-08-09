@@ -2,8 +2,19 @@
 /// `w` and `h` parameters should also be set, so that the crop behavior is
 /// defined within specific image dimensions.
 ///
-/// See [Imgix docs](https://docs.imgix.com/apis/url/size/crop) for more
-/// info.
+/// # Example
+/// ```
+/// use rs_imgix::{ImgixUrl, ImgixCrop, ImgixFit};
+///
+/// let url = ImgixUrl::build("https://foo.com")
+///     .fit(ImgixFit::Crop)
+///     .w(400)
+///     .h(300)
+///     .crop(ImgixCrop::build().top().entropy().finish())
+///     .finish();
+///
+/// assert_eq!(url, "https://foo.com/?fit=crop&w=400&h=300&crop=top,entropy")
+/// ```
 #[derive(Clone, Debug, Default)]
 pub struct ImgixCrop {
     top: bool,
