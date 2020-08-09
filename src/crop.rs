@@ -1,4 +1,10 @@
-#[derive(Clone)]
+/// Crop mode controls how the image is aligned when `fit=crop` is set. The
+/// `w` and `h` parameters should also be set, so that the crop behavior is
+/// defined within specific image dimensions.
+///
+/// See [Imgix docs](https://docs.imgix.com/apis/url/size/crop) for more
+/// info.
+#[derive(Clone, Debug, Default)]
 pub struct ImgixCrop {
     top: bool,
     bottom: bool,
@@ -43,22 +49,9 @@ impl ToString for ImgixCrop {
     }
 }
 
-impl Default for ImgixCrop {
-    fn default() -> Self {
-        Self {
-            top: false,
-            bottom: false,
-            left: false,
-            right: false,
-            faces: false,
-            focalpoint: false,
-            edges: false,
-            entropy: false,
-        }
-    }
-}
-
 impl ImgixCrop {
+    /// Starts building the `crop` parameter. Returns an `ImgixCropBuilder` to
+    /// specify options to pass to `crop`.
     pub fn build() -> ImgixCropBuilder {
         ImgixCropBuilder {
             inner: Self::default(),
@@ -66,43 +59,69 @@ impl ImgixCrop {
     }
 }
 
+/// Builder for specifiying `crop` parameter options.
+#[derive(Debug)]
 pub struct ImgixCropBuilder {
     inner: ImgixCrop,
 }
 
 impl ImgixCropBuilder {
+    /// Completes the construction of the `crop` parameter and returns the final
+    /// `ImgixCrop` type.
     pub fn finish(&self) -> ImgixCrop {
         self.inner.clone()
     }
 
+    /// Crop from the top of he image, down.
     pub fn top(&mut self) -> &mut Self {
         self.inner.top = true;
         self
     }
+
+    /// Crop from the bottom of the image, up.
     pub fn bottom(&mut self) -> &mut Self {
         self.inner.bottom = true;
         self
     }
+
+    /// Crop from the left of the image, right.
     pub fn left(&mut self) -> &mut Self {
         self.inner.left = true;
         self
     }
+
+    /// Crop from the right of the image, left.
     pub fn right(&mut self) -> &mut Self {
         self.inner.right = true;
         self
     }
+
+    /// If faces are detected in the image, attempts to center the crop to them.
+    /// Otherwise, will default to centered if no other values are provided.
     pub fn faces(&mut self) -> &mut Self {
         self.inner.faces = true;
         self
     }
+
+    /// Designates that the Imgix URL can accept focal point parameters `fp-x`,
+    /// `fp-y` and `fp-z` values.
+    ///
+    /// See [Imgix docs](https://docs.imgix.com/apis/url/focalpoint-crop) for
+    /// more info on focal point cropping.
     pub fn focalpoint(&mut self) -> &mut Self {
         self.inner.focalpoint = true;
         self
     }
+
+    /// Automatically finds and crops to an area of interest by performing edge
+    /// detection, looking for objects in the image.
     pub fn edges(&mut self) -> &mut Self {
         self.inner.edges = true;
         self
     }
+
+    /// Automatically finds and crops to an area of interest by looking for busy
+    /// sections of the image.
     pub fn entropy(&mut self) -> &mut Self {
         self.inner.entropy = true;
         self
