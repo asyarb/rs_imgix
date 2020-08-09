@@ -18,7 +18,7 @@ rs_imgix = { git = "https://github.com/asyarb/rs_imgix" }
 In a nutshell, basic usage looks like this:
 
 ```rust
-use rs-imgix::ImgixUrl;
+use rs_imgix::ImgixUrl;
 
 fn main() {
     let url = ImgixUrl::build("https://example.com")
