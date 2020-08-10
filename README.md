@@ -1,6 +1,6 @@
-# rs-imgix
+# rs_imgix
 
-`rs-imgix` is a small crate for constructing valid Imgix URL `String`s. It
+`rs_imgix` is a small crate for constructing valid Imgix URL `String`s. It
 utilizes the builder pattern to dynamically assign parameters that
 are added to the URL.
 
