@@ -32,7 +32,7 @@ impl<'a> ImgixClientHints<'a> {
     /// Completes the construction of the `ch` parameter and returns the
     /// `ImgixClientHints` type.
     pub fn finish(&self) -> Self {
-        self.clone()
+        self.to_owned()
     }
 
     /// Overrides the imgix `w` parameter.

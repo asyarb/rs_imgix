@@ -36,7 +36,7 @@ impl<'a> ImgixCrop<'a> {
     /// Completes the construction of the `crop` parameter and returns the final
     /// `ImgixCrop` type.
     pub fn finish(&self) -> Self {
-        self.clone()
+        self.to_owned()
     }
 
     /// Crop from the top of he image, down.

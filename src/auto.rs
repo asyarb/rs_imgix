@@ -32,7 +32,7 @@ impl<'a> ImgixAuto<'a> {
     /// Completes the construction of the `auto` parameter and returns the
     /// `ImgixAutoType` type.
     pub fn finish(&self) -> Self {
-        self.clone()
+        self.to_owned()
     }
 
     /// When set, Imgix will apply best-effort techniques to reduce the size of
