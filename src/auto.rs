@@ -1,5 +1,5 @@
-/// Builder to represent the `auto` URL parameter. Begin constructing a new URL
-/// by calling `build()`.
+/// Builder to represent the `auto` URL parameter. Begin constructing the
+/// parameter by calling `build()`.
 ///
 /// # Example
 /// ```

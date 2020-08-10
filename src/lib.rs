@@ -242,6 +242,12 @@ mod tests {
 
     #[test]
     fn works() {
+        let test = ImgixRect {
+            h: 100,
+            w: 100,
+            x: Direction::Number(10),
+            y: Direction::Number(50),
+        };
         let url = ImgixUrl::build("https://foo.com")
             .blur(40)
             .q(40)
