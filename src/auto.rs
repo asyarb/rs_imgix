@@ -12,55 +12,27 @@
 /// assert_eq!(url, "https://foo.com/?auto=compress,redeye");
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct ImgixAuto {
-    compress: bool,
-    enhance: bool,
-    format: bool,
-    redeye: bool,
+pub struct ImgixAuto<'a> {
+    opts: Vec<&'a str>,
 }
 
-impl ToString for ImgixAuto {
+impl<'a> ToString for ImgixAuto<'a> {
     fn to_string(&self) -> String {
-        let mut opts = Vec::new();
-
-        if self.compress {
-            opts.push("compress");
-        }
-        if self.enhance {
-            opts.push("enhance");
-        }
-        if self.format {
-            opts.push("format")
-        }
-        if self.redeye {
-            opts.push("redeye");
-        }
-
-        opts.join(",")
+        self.opts.join(",")
     }
 }
 
-impl ImgixAuto {
+impl<'a> ImgixAuto<'a> {
     /// Starts building the `auto` parameter. Returns an `ImgixAutoBuilder` to
     /// specify options to pass to `auto`.
-    pub fn build() -> ImgixAutoBuilder {
-        ImgixAutoBuilder {
-            inner: Self::default(),
-        }
+    pub fn build() -> Self {
+        Self::default()
     }
-}
 
-/// Builder for specifying `auto` parameter options.
-#[derive(Debug)]
-pub struct ImgixAutoBuilder {
-    inner: ImgixAuto,
-}
-
-impl ImgixAutoBuilder {
-    /// Completes the construction of the `auto` parameter and returns the final
-    /// `ImgixAuto` type.
-    pub fn finish(&self) -> ImgixAuto {
-        self.inner.clone()
+    /// Completes the construction of the `auto` parameter and returns the
+    /// `ImgixAutoType` type.
+    pub fn finish(&self) -> Self {
+        self.clone()
     }
 
     /// When set, Imgix will apply best-effort techniques to reduce the size of
@@ -69,7 +41,7 @@ impl ImgixAutoBuilder {
     /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#compress) for
     /// more info.
     pub fn compress(&mut self) -> &mut Self {
-        self.inner.compress = true;
+        self.opts.push("compress");
         self
     }
 
@@ -79,7 +51,7 @@ impl ImgixAutoBuilder {
     /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#enhance) for
     /// more info.
     pub fn enhance(&mut self) -> &mut Self {
-        self.inner.enhance = true;
+        self.opts.push("enhance");
         self
     }
 
@@ -88,7 +60,7 @@ impl ImgixAutoBuilder {
     /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#format) for
     /// more info.
     pub fn format(&mut self) -> &mut Self {
-        self.inner.format = true;
+        self.opts.push("format");
         self
     }
 
@@ -97,7 +69,7 @@ impl ImgixAutoBuilder {
     /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto#redeye) for
     /// more info.
     pub fn redeye(&mut self) -> &mut Self {
-        self.inner.redeye = true;
+        self.opts.push("redeye");
         self
     }
 }

@@ -16,101 +16,57 @@
 /// assert_eq!(url, "https://foo.com/?fit=crop&w=400&h=300&crop=top,entropy")
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct ImgixCrop {
-    top: bool,
-    bottom: bool,
-    left: bool,
-    right: bool,
-    faces: bool,
-    focalpoint: bool,
-    edges: bool,
-    entropy: bool,
+pub struct ImgixCrop<'a> {
+    opts: Vec<&'a str>,
 }
 
-impl ToString for ImgixCrop {
+impl<'a> ToString for ImgixCrop<'a> {
     fn to_string(&self) -> String {
-        let mut opts = Vec::new();
-
-        if self.top {
-            opts.push("top");
-        }
-        if self.bottom {
-            opts.push("bottom");
-        }
-        if self.left {
-            opts.push("left");
-        }
-        if self.right {
-            opts.push("right");
-        }
-        if self.faces {
-            opts.push("faces");
-        }
-        if self.focalpoint {
-            opts.push("focalpoint");
-        }
-        if self.edges {
-            opts.push("edges");
-        }
-        if self.entropy {
-            opts.push("entropy");
-        }
-
-        opts.join(",")
+        self.opts.join(",")
     }
 }
 
-impl ImgixCrop {
+impl<'a> ImgixCrop<'a> {
     /// Starts building the `crop` parameter. Returns an `ImgixCropBuilder` to
     /// specify options to pass to `crop`.
-    pub fn build() -> ImgixCropBuilder {
-        ImgixCropBuilder {
-            inner: Self::default(),
-        }
+    pub fn build() -> Self {
+        Self::default()
     }
-}
 
-/// Builder for specifiying `crop` parameter options.
-#[derive(Debug)]
-pub struct ImgixCropBuilder {
-    inner: ImgixCrop,
-}
-
-impl ImgixCropBuilder {
     /// Completes the construction of the `crop` parameter and returns the final
     /// `ImgixCrop` type.
-    pub fn finish(&self) -> ImgixCrop {
-        self.inner.clone()
+    pub fn finish(&self) -> Self {
+        self.clone()
     }
 
     /// Crop from the top of he image, down.
     pub fn top(&mut self) -> &mut Self {
-        self.inner.top = true;
+        self.opts.push("top");
         self
     }
 
     /// Crop from the bottom of the image, up.
     pub fn bottom(&mut self) -> &mut Self {
-        self.inner.bottom = true;
+        self.opts.push("bottom");
         self
     }
 
     /// Crop from the left of the image, right.
     pub fn left(&mut self) -> &mut Self {
-        self.inner.left = true;
+        self.opts.push("left");
         self
     }
 
     /// Crop from the right of the image, left.
     pub fn right(&mut self) -> &mut Self {
-        self.inner.right = true;
+        self.opts.push("right");
         self
     }
 
     /// If faces are detected in the image, attempts to center the crop to them.
     /// Otherwise, will default to centered if no other values are provided.
     pub fn faces(&mut self) -> &mut Self {
-        self.inner.faces = true;
+        self.opts.push("faces");
         self
     }
 
@@ -120,21 +76,21 @@ impl ImgixCropBuilder {
     /// See [Imgix docs](https://docs.imgix.com/apis/url/focalpoint-crop) for
     /// more info on focal point cropping.
     pub fn focalpoint(&mut self) -> &mut Self {
-        self.inner.focalpoint = true;
+        self.opts.push("focalpoint");
         self
     }
 
     /// Automatically finds and crops to an area of interest by performing edge
     /// detection, looking for objects in the image.
     pub fn edges(&mut self) -> &mut Self {
-        self.inner.edges = true;
+        self.opts.push("edges");
         self
     }
 
     /// Automatically finds and crops to an area of interest by looking for busy
     /// sections of the image.
     pub fn entropy(&mut self) -> &mut Self {
-        self.inner.entropy = true;
+        self.opts.push("entropy");
         self
     }
 }

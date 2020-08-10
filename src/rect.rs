@@ -76,7 +76,7 @@ impl ToString for Direction {
 ///
 /// # Example
 /// ```
-/// use rs_imgix::{ImgixUrl, ImgixRect};
+/// use rs_imgix::{ImgixUrl, ImgixRect, Direction, Y};
 ///
 /// let rect = ImgixRect {
 ///     x: Direction::Number(300),

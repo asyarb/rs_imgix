@@ -40,10 +40,10 @@ mod crop;
 mod fit;
 mod rect;
 
-pub use crate::auto::{ImgixAuto, ImgixAutoBuilder};
-pub use crate::client_hints::{ImgixClientHints, ImgixClientHintsBuilder};
+pub use crate::auto::ImgixAuto;
+pub use crate::client_hints::ImgixClientHints;
 pub use crate::color_space::ImgixColorSpace;
-pub use crate::crop::{ImgixCrop, ImgixCropBuilder};
+pub use crate::crop::ImgixCrop;
 pub use crate::fit::ImgixFit;
 pub use crate::rect::{Direction, ImgixRect, X, Y};
 
@@ -179,7 +179,7 @@ impl<'a> ImgixUrlBuilder<'a> {
     ///
     /// See [Imgix docs](https://docs.imgix.com/apis/url/auto/auto) for more
     /// info.
-    pub fn auto(&mut self, auto: auto::ImgixAuto) -> &mut Self {
+    pub fn auto(&mut self, auto: auto::ImgixAuto<'_>) -> &mut Self {
         self.params.push(("auto", auto.to_string()));
         self
     }
@@ -210,7 +210,7 @@ impl<'a> ImgixUrlBuilder<'a> {
     ///
     /// See [Imgix docs](https://docs.imgix.com/apis/url/size/crop) for more
     /// info.
-    pub fn crop(&mut self, crop: crop::ImgixCrop) -> &mut Self {
+    pub fn crop(&mut self, crop: crop::ImgixCrop<'_>) -> &mut Self {
         self.params.push(("crop", crop.to_string()));
         self
     }
@@ -230,7 +230,7 @@ impl<'a> ImgixUrlBuilder<'a> {
     ///
     /// See [Imgix docs](https://docs.imgix.com/apis/url/format/ch) for more
     /// info.
-    pub fn ch(&mut self, ch: client_hints::ImgixClientHints) -> &mut Self {
+    pub fn ch(&mut self, ch: client_hints::ImgixClientHints<'_>) -> &mut Self {
         self.params.push(("ch", ch.to_string()));
         self
     }

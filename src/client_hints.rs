@@ -6,75 +6,51 @@
 /// use rs_imgix::{ImgixUrl, ImgixClientHints};
 ///
 /// let url = ImgixUrl::build("https://foo.com")
-///     .ch(ImgixClientHins::build().dpr().width())
+///     .ch(ImgixClientHints::build().dpr().width().finish())
 ///     .finish();
 ///
 /// assert_eq!(url, "https://foo.com/?ch=dpr,width");
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct ImgixClientHints {
-    width: bool,
-    dpr: bool,
-    save_data: bool,
+pub struct ImgixClientHints<'a> {
+    opts: Vec<&'a str>,
 }
 
-impl ToString for ImgixClientHints {
+impl<'a> ToString for ImgixClientHints<'a> {
     fn to_string(&self) -> String {
-        let mut opts = Vec::new();
-
-        if self.width {
-            opts.push("width");
-        }
-        if self.dpr {
-            opts.push("dpr");
-        }
-        if self.save_data {
-            opts.push("save-data");
-        }
-
-        opts.join(",")
+        self.opts.join(",")
     }
 }
 
-impl ImgixClientHints {
+impl<'a> ImgixClientHints<'a> {
     /// Starts building the `ch` parameter. Returns an `ImgixClientHintsBuilder`
     /// to specify options to pass to `ch`.
-    pub fn build() -> ImgixClientHintsBuilder {
-        ImgixClientHintsBuilder {
-            inner: Self::default(),
-        }
+    pub fn build() -> Self {
+        Self::default()
     }
-}
 
-/// Builder for specifying `ch` parameter options.
-#[derive(Debug)]
-pub struct ImgixClientHintsBuilder {
-    inner: ImgixClientHints,
-}
-
-impl ImgixClientHintsBuilder {
     /// Completes the construction of the `ch` parameter and returns the
     /// `ImgixClientHints` type.
-    pub fn finish(&self) -> ImgixClientHints {
-        self.inner.clone()
+    pub fn finish(&self) -> Self {
+        self.clone()
     }
 
     /// Overrides the imgix `w` parameter.
     pub fn width(&mut self) -> &mut Self {
-        self.inner.width = true;
+        self.opts.push("width");
         self
     }
 
     /// Overrides the `dpr` parameter.
     pub fn dpr(&mut self) -> &mut Self {
-        self.inner.dpr = true;
+        self.opts.push("dpr");
         self
     }
 
     /// Reduces image quality to `q=45` and may change the output format of the
     /// image.
     pub fn save_data(&mut self) -> &mut Self {
-        self.inner.save_data = true;
+        self.opts.push("save-data");
         self
     }
 }
