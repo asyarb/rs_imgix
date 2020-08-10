@@ -1,9 +1,16 @@
-/// The ch parameter opts in specific images to use [Client
-/// Hints](https://developers.google.com/web/updates/tags/clienthints),
-/// which provide automatic resource selection using browser headers.
+/// Builder to represent the `ch` URL parameter. Begin constructing the
+/// parameter by calling `build()`.
 ///
-/// See [Imgix docs](https://docs.imgix.com/apis/url/format/ch) for more
-/// info.
+/// # Example
+/// ```
+/// use rs_imgix::{ImgixUrl, ImgixClientHints};
+///
+/// let url = ImgixUrl::build("https://foo.com")
+///     .ch(ImgixClientHins::build().dpr().width())
+///     .finish();
+///
+/// assert_eq!(url, "https://foo.com/?ch=dpr,width");
+/// ```
 #[derive(Clone, Debug, Default)]
 pub struct ImgixClientHints {
     width: bool,
