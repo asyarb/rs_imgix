@@ -41,7 +41,7 @@ For more information on Imgix's URL API, please refer to their
 
 ## Disclaimer
 
-This is largely a learning project to gain familiarity with Rust and creating a
+This is a learning project to gain familiarity with Rust and creating a
 library crate. This crate is not intended for use in a production environment.
 This library has no official affliation with Imgix.
 
